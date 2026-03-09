@@ -14,16 +14,28 @@ class Patient extends Model
         'date_of_birth',
         'gender',
         'phone',
-        'address',
+
+        'city',
+        'district',
+        'street',
+        'house_number',
+
         'paper_book_code',
+
         'primary_doctor_id',
         'primary_doctor_assigned_at',
         'primary_doctor_note',
+
         'patient_source_id',
         'patient_source_note',
+
+        'zalo_phone',
+
+        'emergency_contact_name',
+        'emergency_contact_phone',
+
         'notes',
     ];
-
     protected $casts = [
         'date_of_birth' => 'date',
         'primary_doctor_assigned_at' => 'date',

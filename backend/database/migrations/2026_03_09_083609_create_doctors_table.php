@@ -10,12 +10,22 @@ return new class extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
+
             $table->string('doctor_code')->unique();
+
+            // học hàm học vị
+            $table->string('title')->nullable();
+
             $table->string('full_name');
             $table->string('specialty')->nullable();
             $table->string('phone')->nullable();
+
             $table->boolean('is_active')->default(true);
+
             $table->timestamps();
+
+            $table->index(['full_name']);
+            $table->index(['title']);
         });
     }
 

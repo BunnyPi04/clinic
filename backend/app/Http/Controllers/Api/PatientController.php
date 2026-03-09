@@ -36,13 +36,26 @@ class PatientController extends Controller
             'date_of_birth' => ['nullable', 'date'],
             'gender' => ['nullable', 'string', 'max:20'],
             'phone' => ['nullable', 'string', 'max:30'],
-            'address' => ['nullable', 'string', 'max:255'],
+
+            'city' => ['nullable', 'string', 'max:255'],
+            'district' => ['nullable', 'string', 'max:255'],
+            'street' => ['nullable', 'string', 'max:255'],
+            'house_number' => ['nullable', 'string', 'max:255'],
+
             'paper_book_code' => ['nullable', 'string', 'max:255'],
+
             'primary_doctor_id' => ['nullable', 'exists:doctors,id'],
             'primary_doctor_assigned_at' => ['nullable', 'date'],
             'primary_doctor_note' => ['nullable', 'string'],
+
             'patient_source_id' => ['nullable', 'exists:patient_sources,id'],
             'patient_source_note' => ['nullable', 'string'],
+
+            'zalo_phone' => ['nullable', 'string', 'max:30'],
+
+            'emergency_contact_name' => ['nullable', 'string', 'max:255'],
+            'emergency_contact_phone' => ['nullable', 'string', 'max:30'],
+
             'notes' => ['nullable', 'string'],
         ]);
 
