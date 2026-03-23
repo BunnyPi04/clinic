@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Visit extends Model
 {
@@ -49,5 +51,25 @@ class Visit extends Model
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function services(): HasMany
+    {
+        return $this->hasMany(VisitService::class);
+    }
+
+    public function payment(): HasOne
+    {
+        return $this->hasOne(Payment::class);
+    }
+
+    public function actions(): HasMany
+    {
+        return $this->hasMany(VisitAction::class);
+    }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(VisitDocument::class);
     }
 }
