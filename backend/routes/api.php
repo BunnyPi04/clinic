@@ -1,17 +1,26 @@
 <?php
 
+use App\Http\Controllers\Api\BillingOptionController;
+use App\Http\Controllers\Api\BotNotificationChannelController;
+use App\Http\Controllers\Api\ClinicalNoteController;
 use App\Http\Controllers\Api\DoctorController;
-use App\Http\Controllers\Api\PatientController;
-use App\Http\Controllers\Api\PatientSourceController;
-use App\Http\Controllers\Api\VisitController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PaymentController;
-use App\Http\Controllers\Api\PaymentTransactionController;
-use App\Http\Controllers\Api\VisitServiceController;
-use App\Http\Controllers\Api\VisitActionController;
-use App\Http\Controllers\Api\VisitDocumentController;
+use App\Http\Controllers\Api\DocumentAiController;
+use App\Http\Controllers\Api\DocumentImportController;
+use App\Http\Controllers\Api\LabBillingController;
 use App\Http\Controllers\Api\LabPanelController;
 use App\Http\Controllers\Api\LabResultController;
+use App\Http\Controllers\Api\PatientController;
+use App\Http\Controllers\Api\PatientSourceController;
+use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\PaymentTransactionController;
+use App\Http\Controllers\Api\ServiceCatalogController;
+use App\Http\Controllers\Api\UltrasoundReportController;
+use App\Http\Controllers\Api\VisitActionController;
+use App\Http\Controllers\Api\VisitController;
+use App\Http\Controllers\Api\VisitDocumentController;
+use App\Http\Controllers\Api\VisitServiceBatchController;
+use App\Http\Controllers\Api\VisitServiceController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/health', function () {
     return response()->json([
@@ -54,3 +63,57 @@ Route::get('/lab-panels/{labPanel}', [LabPanelController::class, 'show']);
 Route::post('/lab-panels/{labPanel}/results', [LabResultController::class, 'store']);
 Route::put('/lab-results/{labResult}', [LabResultController::class, 'update']);
 Route::delete('/lab-results/{labResult}', [LabResultController::class, 'destroy']);
+
+Route::post('/visits/{visit}/lab-billing/sync', [LabBillingController::class, 'syncToVisitService']);
+
+Route::get('/visits/{visit}/clinical-notes', [ClinicalNoteController::class, 'index']);
+Route::post('/visits/{visit}/clinical-notes', [ClinicalNoteController::class, 'store']);
+Route::get('/clinical-notes/{clinicalNote}', [ClinicalNoteController::class, 'show']);
+Route::put('/clinical-notes/{clinicalNote}', [ClinicalNoteController::class, 'update']);
+Route::delete('/clinical-notes/{clinicalNote}', [ClinicalNoteController::class, 'destroy']);
+
+Route::get('/visit-documents/{visitDocument}/ultrasound-reports', [UltrasoundReportController::class, 'index']);
+Route::post('/visit-documents/{visitDocument}/ultrasound-reports', [UltrasoundReportController::class, 'store']);
+Route::get('/ultrasound-reports/{ultrasoundReport}', [UltrasoundReportController::class, 'show']);
+Route::put('/ultrasound-reports/{ultrasoundReport}', [UltrasoundReportController::class, 'update']);
+Route::delete('/ultrasound-reports/{ultrasoundReport}', [UltrasoundReportController::class, 'destroy']);
+
+Route::get('/visit-documents/{visitDocument}/ai', [DocumentAiController::class, 'show']);
+Route::post('/visit-documents/{visitDocument}/ai/mock-extract', [DocumentAiController::class, 'runMockExtraction']);
+Route::put('/visit-documents/{visitDocument}/ai', [DocumentAiController::class, 'updateExtraction']);
+Route::post('/visit-documents/{visitDocument}/ai/review', [DocumentAiController::class, 'markReviewed']);
+Route::post('/visit-documents/{visitDocument}/import-structured-data', [DocumentImportController::class, 'importStructuredData']);
+Route::get(
+    '/visits/{visit}/billing-options',
+    [BillingOptionController::class, 'index']
+);
+
+Route::put(
+    '/visits/{visit}/services/batch',
+    [VisitServiceBatchController::class, 'replace']
+);
+
+Route::get('/service-catalogs', [
+    ServiceCatalogController::class,
+    'index',
+]);
+
+Route::post('/service-catalogs', [
+    ServiceCatalogController::class,
+    'store',
+]);
+
+Route::get('/service-catalogs/{serviceCatalog}', [
+    ServiceCatalogController::class,
+    'show',
+]);
+
+Route::put('/service-catalogs/{serviceCatalog}', [
+    ServiceCatalogController::class,
+    'update',
+]);
+
+Route::post('/bot-notifications/channels', [
+    BotNotificationChannelController::class,
+    'store',
+]);

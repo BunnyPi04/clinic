@@ -105,3 +105,11 @@ Tiếp theo nên tạo migration:
 ## Ghi chú
 Laravel source chưa được đóng gói sẵn trong zip để zip nhẹ hơn.
 Sau khi chạy create-project, backend sẽ đầy đủ.
+
+
+```bash
+docker compose up -d --build
+docker compose up -d frontend
+```
+- Laravel API chạy ở `http://localhost:8020`
+- React chạy ở `http://localhost:5173`

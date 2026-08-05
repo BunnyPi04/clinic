@@ -9,6 +9,7 @@ class VisitService extends Model
 {
     protected $fillable = [
         'visit_id',
+        'service_catalog_id',
         'service_type',
         'service_category',
         'service_code',
@@ -39,5 +40,10 @@ class VisitService extends Model
     public function doctor(): BelongsTo
     {
         return $this->belongsTo(Doctor::class);
+    }
+
+    public function serviceCatalog(): BelongsTo
+    {
+        return $this->belongsTo(ServiceCatalog::class);
     }
 }
