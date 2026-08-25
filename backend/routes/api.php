@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\BillingOptionController;
-use App\Http\Controllers\Api\BotNotificationChannelController;
 use App\Http\Controllers\Api\ClinicalNoteController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\DocumentAiController;
@@ -20,6 +19,10 @@ use App\Http\Controllers\Api\VisitController;
 use App\Http\Controllers\Api\VisitDocumentController;
 use App\Http\Controllers\Api\VisitServiceBatchController;
 use App\Http\Controllers\Api\VisitServiceController;
+use App\Http\Controllers\Api\DepartmentController;
+use App\Http\Controllers\Api\DoctorManagementController;
+use App\Http\Controllers\Api\DoctorScheduleController;
+use App\Http\Controllers\Api\HospitalController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', function () {
@@ -113,7 +116,77 @@ Route::put('/service-catalogs/{serviceCatalog}', [
     'update',
 ]);
 
-Route::post('/bot-notifications/channels', [
-    BotNotificationChannelController::class,
+Route::get('/hospitals', [
+    HospitalController::class,
+    'index',
+]);
+
+Route::post('/hospitals', [
+    HospitalController::class,
     'store',
+]);
+
+Route::get('/hospitals/{hospital}', [
+    HospitalController::class,
+    'show',
+]);
+
+Route::put('/hospitals/{hospital}', [
+    HospitalController::class,
+    'update',
+]);
+
+Route::get('/departments', [
+    DepartmentController::class,
+    'index',
+]);
+
+Route::post('/departments', [
+    DepartmentController::class,
+    'store',
+]);
+
+Route::put('/departments/{department}', [
+    DepartmentController::class,
+    'update',
+]);
+
+Route::get('/staff/doctors', [
+    DoctorManagementController::class,
+    'index',
+]);
+
+Route::get('/staff/doctors/{doctor}', [
+    DoctorManagementController::class,
+    'show',
+]);
+
+Route::put('/staff/doctors/{doctor}', [
+    DoctorManagementController::class,
+    'update',
+]);
+
+Route::get('/staff/doctors/{doctor}/schedules', [
+    DoctorScheduleController::class,
+    'index',
+]);
+
+Route::post('/staff/doctors/{doctor}/schedules', [
+    DoctorScheduleController::class,
+    'storeSchedule',
+]);
+
+Route::put('/doctor-schedules/{doctorSchedule}', [
+    DoctorScheduleController::class,
+    'updateSchedule',
+]);
+
+Route::post('/staff/doctors/{doctor}/schedule-exceptions', [
+    DoctorScheduleController::class,
+    'storeException',
+]);
+
+Route::get('/doctor-schedules/by-date', [
+    DoctorScheduleController::class,
+    'doctorsForDate',
 ]);
